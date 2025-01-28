@@ -9,7 +9,7 @@ import se.lexicon.g52todoapi.domain.entity.Role;
 public class RoleConverterImpl implements RoleConverter {
     @Override
     public RoleDTOView toRoleDto(Role entity) {
-        return  new RoleDTOView(entity.getId(),entity.getName());
+        return new RoleDTOView(entity.getId(),entity.getName());
     }
 
     @Override

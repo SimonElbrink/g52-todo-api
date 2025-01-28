@@ -43,6 +43,9 @@ public class User {
         this.expired = false;
     }
 
+    public User(String email, String password, Set<Role> roles) {
+    }
+
     public void addRole(Role role){
         if (role == null) throw new IllegalArgumentException("Role cannot be null");
         if (roles == null) roles = new TreeSet<>();

@@ -11,7 +11,6 @@ import java.util.TreeSet;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode(exclude = "roles")
 

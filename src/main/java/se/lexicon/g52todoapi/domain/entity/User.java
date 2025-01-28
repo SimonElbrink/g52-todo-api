@@ -54,7 +54,7 @@ public class User {
         if (roles != null) {
             roles.remove(role);
         }else{
-            //Todo: throw exceptions if needed
+            throw new IllegalArgumentException("Role " + role + " does not exist");
         }
 
     }

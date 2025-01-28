@@ -11,6 +11,7 @@ import java.util.TreeSet;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode(exclude = "roles")
 
@@ -41,6 +42,9 @@ public class User {
         this.password = password;
         this.roles = new TreeSet<>();
         this.expired = false;
+    }
+
+    public User(String email, String password, Set<Role> roles) {
     }
 
     public void addRole(Role role){

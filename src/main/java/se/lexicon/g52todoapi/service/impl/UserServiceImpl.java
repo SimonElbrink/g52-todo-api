@@ -1,14 +1,28 @@
 package se.lexicon.g52todoapi.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.dto.UserDTOView;
+import se.lexicon.g52todoapi.repository.UserRepository;
+import se.lexicon.g52todoapi.repository.RoleRepository;
+import se.lexicon.g52todoapi.converter.RoleConverterImpl;
+
 import se.lexicon.g52todoapi.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    //Todo: Add the required dependencies
+    UserRepository userRepository;
+    RoleRepository roleRepository;
+    RoleConverterImpl roleConverterImpl;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, RoleConverterImpl roleConverterImpl) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.roleConverterImpl = roleConverterImpl;
+    }
 
     @Override
     public UserDTOView register(UserDTOForm userDTOForm) {

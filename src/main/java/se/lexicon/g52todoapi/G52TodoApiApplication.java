@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import se.lexicon.g52todoapi.domain.dto.RoleDTOView;
 import se.lexicon.g52todoapi.service.RoleService;
 
@@ -17,6 +18,7 @@ public class G52TodoApiApplication {
     }
 
 
+    @Profile("dev")
     @Bean
     public CommandLineRunner runner (RoleService roleService){
         return (args)-> {

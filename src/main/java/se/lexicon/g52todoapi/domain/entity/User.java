@@ -9,10 +9,11 @@ import java.util.TreeSet;
 
 @Setter
 @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(exclude = "roles")
+@Builder
 
 @Entity
 public class User {
@@ -36,11 +37,29 @@ public class User {
     )
     private Set<Role> roles;
 
-    public User(@NonNull String email,@NonNull String password) {
+    public User(@NonNull String email) {
+        this.email = email;
+        //Generate Random Password
+    }
+
+    public User(@NonNull String email, @NonNull String password) {
         this.email = email;
         this.password = password;
         this.roles = new TreeSet<>();
         this.expired = false;
+    }
+
+    public User(@NonNull String email, @NonNull String password, boolean expired) {
+        this.email = email;
+        this.password = password;
+        this.expired = expired;
+    }
+
+    public User(@NonNull String email, @NonNull String password, boolean expired, Set<Role> roles) {
+        this.email = email;
+        this.password = password;
+        this.expired = expired;
+        this.roles = roles;
     }
 
     public void addRole(Role role){
@@ -58,8 +77,6 @@ public class User {
         }
 
     }
-
-
 
 
 }

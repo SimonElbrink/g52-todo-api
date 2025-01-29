@@ -5,12 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import se.lexicon.g52todoapi.domain.dto.RoleDTOForm;
 import se.lexicon.g52todoapi.domain.dto.RoleDTOView;
+import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.entity.User;
 import se.lexicon.g52todoapi.service.RoleService;
 import se.lexicon.g52todoapi.service.UserService;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 @SpringBootApplication
@@ -23,7 +26,7 @@ public class G52TodoApiApplication {
 
     @Profile("dev")
     @Bean
-    public CommandLineRunner runner(RoleService roleService) {
+    public CommandLineRunner runner(RoleService roleService, UserService userService) {
         return (args) -> {
 
 /*
@@ -51,6 +54,17 @@ public class G52TodoApiApplication {
                     .password("123456")
                     .build();
 */
+
+            UserDTOForm simon = UserDTOForm.builder()
+                    .email("simon@lexicon.se")
+                    .password("123456")
+                    .roles(Set.of(RoleDTOForm.builder()
+                            .id(1L)
+                            .name("ADMIN").build()))
+                    .build();
+
+            userService.register(simon);
+
         };
     }
 

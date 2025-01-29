@@ -11,9 +11,10 @@ import lombok.*;
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
 
 @Entity
-public class Role implements Comparable<Role>{
+public class Role implements Comparable<Role> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Role implements Comparable<Role>{
     private Long id;
 
     @NonNull // Lombok
-    @Column(nullable = false ,unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Override

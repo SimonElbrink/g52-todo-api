@@ -23,8 +23,8 @@ public class G52TodoApiApplication {
 
     @Profile("dev")
     @Bean
-    public CommandLineRunner runner (RoleService roleService){
-        return (args)-> {
+    public CommandLineRunner runner(RoleService roleService) {
+        return (args) -> {
 
 /*
            List<RoleDTOView> all = roleService.getAll();
@@ -36,7 +36,7 @@ public class G52TodoApiApplication {
             all.forEach(System.out::println);
 */
 
-
+/*
             //Using Constructors
             new User("Simon@lexicon.se", null, false, new TreeSet<>());
             new User("Simon@lexicon.se", "123456");
@@ -50,9 +50,8 @@ public class G52TodoApiApplication {
                     .email("Simon@lexicon.se")
                     .password("123456")
                     .build();
-
-
-        } ;
+*/
+        };
     }
 
 }

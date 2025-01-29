@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 @Setter
 @Getter
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode(exclude = "roles")
@@ -37,10 +37,6 @@ public class User {
     )
     private Set<Role> roles;
 
-    public User(@NonNull String email) {
-        this.email = email;
-        //Generate Random Password
-    }
 
     public User(@NonNull String email, @NonNull String password) {
         this.email = email;
@@ -49,30 +45,17 @@ public class User {
         this.expired = false;
     }
 
-    public User(@NonNull String email, @NonNull String password, boolean expired) {
-        this.email = email;
-        this.password = password;
-        this.expired = expired;
-    }
-
-    public User(@NonNull String email, @NonNull String password, boolean expired, Set<Role> roles) {
-        this.email = email;
-        this.password = password;
-        this.expired = expired;
-        this.roles = roles;
-    }
-
-    public void addRole(Role role){
+    public void addRole(Role role) {
         if (role == null) throw new IllegalArgumentException("Role cannot be null");
         if (roles == null) roles = new TreeSet<>();
         roles.add(role);
     }
 
-    public void removeRole(Role role){
+    public void removeRole(Role role) {
         if (role == null) throw new IllegalArgumentException("Role cannot be null");
         if (roles != null) {
             roles.remove(role);
-        }else{
+        } else {
             throw new IllegalArgumentException("Role " + role + " does not exist");
         }
 

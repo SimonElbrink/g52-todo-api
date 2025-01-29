@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toSet());
 
         //4. Convert UserDTOForm to Entity
-        //5. Todo: Hashing Password (Encrypt)
+        //5. Todo: Hashing Password "Encrypt" with BCryptPasswordEncoder (EXTRA)
         User user = User.builder()
                 .email(userDTOForm.getEmail())
                 .password(userDTOForm.getPassword())
@@ -81,6 +81,10 @@ public class UserServiceImpl implements UserService {
         return userDTOView;
     }
 
+    @Override
+    public boolean authorizeUser(String email, String password) {
+        return false; // Todo: Implement methods (EXTRA)
+    }
 
     @Override
     public UserDTOView getByEmail(String email) {

@@ -7,6 +7,8 @@ public interface UserService {
 
     UserDTOView register(UserDTOForm userDTOForm);
 
+    boolean authorizeUser(String email, String password);
+
     UserDTOView getByEmail(String email);
 
     void disableByEmail(String email);

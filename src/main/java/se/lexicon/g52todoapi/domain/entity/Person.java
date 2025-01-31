@@ -24,11 +24,12 @@ public class Person {
     @NonNull
     private String name;
 
-    // Todo: Start Here - Implement the accurate relationship annotation. The foreign key column in Person table shall be "email".
-    @NonNull
+    @OneToOne
+    @JoinColumn(name = "email")
+    @NonNull // Lombok
     private User user;
 
-    // Todo: Start Here - Implement the accurate relationship annotation.
+    @OneToMany(mappedBy = "person")
     private List<Task> tasks = new ArrayList<>();
 
     public void addTask(Task... tasks) { //task1, task2, task3

@@ -26,6 +26,7 @@ public class Task {
     private LocalDate deadline;
     private boolean done;
 
-    // Todo: Start Here - Implement the accurate relationship annotation. Make sure to have a meaningful name for column.
+    @ManyToOne
+    @JoinColumn(name = "person_id")
     private Person person;
 }

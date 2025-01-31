@@ -43,7 +43,8 @@ public class G52TodoApiApplication {
             //Using Constructors
             new User("Simon@lexicon.se", null, false, new TreeSet<>());
             new User("Simon@lexicon.se", "123456");
-            User user = new User("Simon@lexicon.se");
+            User user = new User();
+            user.setEmail("Simon@lexicon.se");
             user.setPassword("123456");
             user.setExpired(true);
             user.setRoles(null);
@@ -55,13 +56,7 @@ public class G52TodoApiApplication {
                     .build();
 */
 
-            UserDTOForm simon = UserDTOForm.builder()
-                    .email("simon@lexicon.se")
-                    .password("123456")
-                    .roles(Set.of(RoleDTOForm.builder()
-                            .id(1L)
-                            .name("ADMIN").build()))
-                    .build();
+            UserDTOForm simon = new UserDTOForm("simon@lexicon.se", "123456", Set.of(new RoleDTOForm(1L, "ADMIN")));
 
             userService.register(simon);
 

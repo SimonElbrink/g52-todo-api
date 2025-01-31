@@ -1,14 +1,9 @@
 package se.lexicon.g52todoapi.domain.dto;
 
-import lombok.*;
+import lombok.Builder;
 
 import java.util.Set;
 
-@Setter
-@Getter
-@ToString
 @Builder
-public class UserDTOView {
-    private String email;
-    private Set<RoleDTOView> roles;
+public record UserDTOView(String email, Set<RoleDTOView> roles) {
 }

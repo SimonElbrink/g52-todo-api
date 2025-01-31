@@ -2,7 +2,6 @@ package se.lexicon.g52todoapi.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.lexicon.g52todoapi.converter.RoleConverterImpl;
 import se.lexicon.g52todoapi.domain.dto.RoleDTOView;
 import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.dto.UserDTOView;
@@ -22,13 +21,11 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     RoleRepository roleRepository;
-    RoleConverterImpl roleConverterImpl;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, RoleConverterImpl roleConverterImpl) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.roleConverterImpl = roleConverterImpl;
     }
 
     @Override
@@ -38,14 +35,14 @@ public class UserServiceImpl implements UserService {
         if (userDTOForm == null) throw new IllegalArgumentException("User from cannot be null!");
         //2. Check if email exists in the DB
 
-        boolean doesEmailExist = userRepository.existsByEmail(userDTOForm.getEmail()); // TODO: Validate that there is an email address and not null
+        boolean doesEmailExist = userRepository.existsByEmail(userDTOForm.email()); // TODO: Validate that there is an email address and not null
         if (doesEmailExist) throw new DataDuplicationException("Email already Exists");
 
         //3. Validate Roles for user by calling repo, and retrieve roles
-        Set<Role> roles = userDTOForm.getRoles()
+        Set<Role> roles = userDTOForm.roles()
                 .stream()
                 .map((roleDto) ->
-                        roleRepository.findById(roleDto.getId())
+                        roleRepository.findById(roleDto.id())
                                 .orElseThrow(() -> new DataNotFoundException("Role is not Valid"))
                 )
                 .collect(Collectors.toSet());
@@ -53,8 +50,8 @@ public class UserServiceImpl implements UserService {
         //4. Convert UserDTOForm to Entity
         //5. Todo: Hashing Password "Encrypt" with BCryptPasswordEncoder (EXTRA)
         User user = User.builder()
-                .email(userDTOForm.getEmail())
-                .password(userDTOForm.getPassword())
+                .email(userDTOForm.email())
+                .password(userDTOForm.password())
                 .roles(roles) // With converted roles 😎
                 .build();
 

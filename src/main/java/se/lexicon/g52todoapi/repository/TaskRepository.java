@@ -1,16 +1,33 @@
 package se.lexicon.g52todoapi.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import se.lexicon.g52todoapi.domain.entity.Task;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    // Todo: select tasks contain title
-    // Todo: select tasks by person's id
-    // Todo: select tasks by status
-    // Todo: select tasks by date between start and end
-    // Todo: select all unassigned tasks
-    // Todo: select all unfinished tasks
-    // Todo: select all unfinished and overdue tasks
+    List<Task> findByTitleContains(String title);
+
+    List<Task> findByPerson_Id(Long personId);
+
+    List<Task> findByDone(boolean done);
+
+    @Query("select t from Task t where t.deadline between :from and :to")
+    List<Task> selectTasksBetweenDates(@Param("from") LocalDate from, @Param("to") LocalDate to);
+
+    List<Task> findByDeadlineBetween(LocalDate from, LocalDate to);
+
+    List<Task> findByPersonIsNull();
+
+    @Query("select t from Task t where t.done = false")
+    List<Task> selectUnFinishedTasks();
+
+
+    @Query("select t from Task t where t.done = false and current_date > t.deadline ")
+    List<Task> selectUnFinishedAndOverdueTasks();
 
 }

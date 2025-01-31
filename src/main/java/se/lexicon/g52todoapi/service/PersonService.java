@@ -1,10 +1,18 @@
 package se.lexicon.g52todoapi.service;
 
+import se.lexicon.g52todoapi.domain.dto.PersonDTOForm;
+import se.lexicon.g52todoapi.domain.dto.PersonDTOView;
+
+import java.util.List;
+
 public interface PersonService {
-    // Todo: Make sure to use the matching PersonDTOForm & PersonDTOView in your parameters and Return types.
-    // Todo: create
-    // Todo: findById
-    // Todo: findAll
-    // Todo: update
-    // Todo: delete
+    PersonDTOView create(PersonDTOForm personDTOForm);
+
+    PersonDTOView findById(Long id);
+
+    List<PersonDTOView> findAll();
+
+    PersonDTOView update(PersonDTOForm personDTOForm);
+
+    void delete(Long id);
 }

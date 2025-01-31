@@ -1,12 +1,7 @@
 package se.lexicon.g52todoapi.domain.dto;
 
-import lombok.*;
+import lombok.Builder;
 
-@Getter
-@Setter
-@ToString
 @Builder
-public class RoleDTOView {
-    private Long id;
-    private String name;
+public record RoleDTOView(Long id, String name) {
 }

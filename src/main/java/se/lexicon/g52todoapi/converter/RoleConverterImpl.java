@@ -15,10 +15,10 @@ public class RoleConverterImpl implements RoleConverter {
 
     @Override
     public Role toEntity(RoleDTOForm dto) {
-//        return new Role(dto.getId(), dto.getName());
+//        return new Role(dto.id(), dto.name());
         return Role.builder()
-                .id(dto.getId())
-                .name(dto.getName())
+                .id(dto.id())
+                .name(dto.name())
                 .build();
     }
 }

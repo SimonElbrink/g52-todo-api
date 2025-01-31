@@ -12,6 +12,7 @@ import se.lexicon.g52todoapi.exception.DataNotFoundException;
 import se.lexicon.g52todoapi.repository.RoleRepository;
 import se.lexicon.g52todoapi.repository.UserRepository;
 import se.lexicon.g52todoapi.service.UserService;
+import se.lexicon.g52todoapi.util.CustomPasswordEncoder;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -19,13 +20,15 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-    RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final CustomPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CustomPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -48,10 +51,9 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toSet());
 
         //4. Convert UserDTOForm to Entity
-        //5. Todo: Hashing Password "Encrypt" with BCryptPasswordEncoder (EXTRA)
         User user = User.builder()
                 .email(userDTOForm.email())
-                .password(userDTOForm.password())
+                .password(passwordEncoder.encode(userDTOForm.password()))
                 .roles(roles) // With converted roles 😎
                 .build();
 

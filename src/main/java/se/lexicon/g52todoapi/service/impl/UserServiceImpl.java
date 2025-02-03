@@ -2,6 +2,7 @@ package se.lexicon.g52todoapi.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.g52todoapi.domain.dto.RoleDTOView;
 import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.dto.UserDTOView;
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
                 .roles(roleDTOViews)
                 .build();
     }
-
+    @Transactional
     @Override
     public void disableByEmail(String email) { // TODO: validate input?
         //1. Does the email exist in DB?
@@ -120,6 +121,7 @@ public class UserServiceImpl implements UserService {
         userRepository.updateExpiredByEmail(email, true);
     }
 
+    @Transactional
     @Override
     public void enableByEmail(String email) {// TODO: validate input?
         //1. Does the email exist in DB?

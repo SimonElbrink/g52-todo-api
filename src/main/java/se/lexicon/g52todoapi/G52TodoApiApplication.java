@@ -56,9 +56,12 @@ public class G52TodoApiApplication {
                     .build();
 */
 
+/*
+
             UserDTOForm simon = new UserDTOForm("simon@lexicon.se", "123456", Set.of(new RoleDTOForm(1L, "ADMIN")));
 
             userService.register(simon);
+*/
 
         };
     }

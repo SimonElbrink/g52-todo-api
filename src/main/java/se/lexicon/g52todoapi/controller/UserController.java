@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.dto.UserDTOView;
+import se.lexicon.g52todoapi.domain.entity.User;
 import se.lexicon.g52todoapi.service.UserService;
 
 @RequestMapping("api/v1/users")

@@ -1,5 +1,6 @@
 package se.lexicon.g52todoapi.service.impl;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.lexicon.g52todoapi.domain.dto.PersonDTOForm;
@@ -7,24 +8,31 @@ import se.lexicon.g52todoapi.domain.dto.PersonDTOView;
 import se.lexicon.g52todoapi.domain.entity.Person;
 import se.lexicon.g52todoapi.exception.DataNotFoundException;
 import se.lexicon.g52todoapi.repository.PersonRepository;
+import se.lexicon.g52todoapi.repository.UserRepository;
 import se.lexicon.g52todoapi.service.PersonService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository personRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public PersonServiceImpl(PersonRepository personRepository) {
+    public PersonServiceImpl(PersonRepository personRepository , UserRepository userRepository) {
         this.personRepository = personRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public PersonDTOView create(PersonDTOForm personDTOForm) {
-        Person person = Person.builder().name(personDTOForm.name()).build();
+        Person person = Person.builder()
+                .name(personDTOForm.name())
+                .user(userRepository.getById(personDTOForm.email()))
+                .build();
         person = personRepository.save(person);
         return PersonDTOView.builder()
                 .id(person.getId())

@@ -10,6 +10,7 @@ import se.lexicon.g52todoapi.domain.entity.Task;
 import se.lexicon.g52todoapi.exception.DataNotFoundException;
 import se.lexicon.g52todoapi.repository.PersonRepository;
 import se.lexicon.g52todoapi.repository.TaskRepository;
+import se.lexicon.g52todoapi.repository.UserRepository;
 import se.lexicon.g52todoapi.service.TaskService;
 
 import java.time.LocalDate;
@@ -36,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
                 .title(taskDTOForm.title())
                 .description(taskDTOForm.description())
                 .deadline(taskDTOForm.deadline())
+                .person(personRepository.getById(taskDTOForm.person().id())) //Added
                 .done(false)
                 .build();
 
@@ -156,11 +158,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private TaskDTOView convertToTaskDTOView(Task task) {
+        PersonDTOView personDTOView = PersonDTOView.builder().id(task.getPerson().getId()).build(); //added
         return TaskDTOView.builder()
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
                 .deadline(task.getDeadline())
+                .person(personDTOView) //Added
                 .done(task.isDone())
                 .build();
     }

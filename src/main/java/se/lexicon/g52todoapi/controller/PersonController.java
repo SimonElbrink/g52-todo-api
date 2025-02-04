@@ -8,34 +8,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.g52todoapi.domain.dto.*;
+import se.lexicon.g52todoapi.repository.PersonRepository;
+import se.lexicon.g52todoapi.repository.UserRepository;
 import se.lexicon.g52todoapi.service.PersonService;
+import se.lexicon.g52todoapi.service.UserService;
 import se.lexicon.g52todoapi.service.impl.PersonServiceImpl;
 import se.lexicon.g52todoapi.service.impl.UserServiceImpl;
 
 import java.util.List;
 
-@Transactional
+
 @RequestMapping("/api/v1/person")
 @RestController
 public class PersonController {
-    private final UserServiceImpl userServiceImpl;
-    private final PersonServiceImpl personServiceImpl;
+
+    private final UserService userService;
+    private final PersonService personService;
     //Todo: Implement Controller
 
-    PersonService personService;
+
 
     @Autowired
-    public PersonController(PersonService personService, UserServiceImpl userServiceImpl, PersonServiceImpl personServiceImpl) {
+    public PersonController(PersonService personService, UserService userService) {
         this.personService = personService;
-        this.userServiceImpl = userServiceImpl;
-        this.personServiceImpl = personServiceImpl;
+        this.userService = userService;
     }
 
-    @GetMapping
-    public String test(){
-        System.out.println("---------------------------------------------------------");
-        return "test";
-    }
 
     @PostMapping() //ok
     public ResponseEntity<PersonDTOView> doRegister(@RequestBody PersonDTOForm form) {
@@ -48,12 +46,12 @@ public class PersonController {
     @GetMapping("/auth") //ok
     public boolean doAuthorize(@RequestParam String email, @RequestParam String password) {
 
-        return userServiceImpl.authorizeUser(email, password);
+        return userService.authorizeUser(email, password);
     }
 
-    @GetMapping("/{id}") //ok
-    public ResponseEntity<PersonDTOView> doGetUserById(@PathVariable Long id) {
-        PersonDTOView resultUser =  personServiceImpl.findById(id);
+    @GetMapping() //ok
+    public ResponseEntity<PersonDTOView> doGetUserById(@RequestParam Long id) {
+        PersonDTOView resultUser =  personService.findById(id);
         if(resultUser == null) {
             return null;
         }
@@ -62,7 +60,7 @@ public class PersonController {
 
     @GetMapping("/getallusers") //ok
     public ResponseEntity<List<PersonDTOView>> getAllUsers() {
-        List<PersonDTOView> resultUsers = personServiceImpl.findAll();
+        List<PersonDTOView> resultUsers = personService.findAll();
         if(resultUsers.isEmpty()) {
             return null;
         }
@@ -83,10 +81,10 @@ public class PersonController {
 
     @DeleteMapping("/deleteperson") //Tried to get this working with RequestParam with no luck tried with Requestbody and this does the trick
     public ResponseEntity<Void> doDeletePerson(@RequestBody Long id) {
-        if(personServiceImpl.findById(id) == null) {
+        if(personService.findById(id) == null) {
             return null;
         }
-        personServiceImpl.delete(id);
+        personService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

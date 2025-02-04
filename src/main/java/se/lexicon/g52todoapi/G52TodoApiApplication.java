@@ -54,7 +54,7 @@ public class G52TodoApiApplication {
                     .email("Simon@lexicon.se")
                     .password("123456")
                     .build();
-*/
+
 
 /*
 

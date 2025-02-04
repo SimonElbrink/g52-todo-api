@@ -83,6 +83,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean authorizeUser(String email, String password) {
+        if(userRepository.existsByEmail(email)) {
+            return passwordEncoder.matches(password, userRepository.findById(email).orElseThrow().getPassword());
+        }
         return false; // Todo: Implement methods (EXTRA)
     }
 

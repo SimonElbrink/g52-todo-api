@@ -1,5 +1,10 @@
 package se.lexicon.g52todoapi.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,18 +29,23 @@ public class UserController {
     //http://localhost:8080/api/v1/users?email=test@email.com
 
     @GetMapping
-    public ResponseEntity<UserDTOView> doGetUserByEmail(@RequestParam String email){
+    public ResponseEntity<UserDTOView> doGetUserByEmail(
+            @RequestParam
+            @NotEmpty
+            @NotNull
+//            @Email
+            @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid Email format")
+            String email) {
         UserDTOView responseBody = userService.getByEmail(email);
         return ResponseEntity.ok(responseBody);
     }
 
 
-
     //POST http://localhost:8080/api/v1/users (Send with RequestBody)
 
-//    @RequestMapping(method = RequestMethod.POST)
+    //    @RequestMapping(method = RequestMethod.POST)
     @PostMapping
-    public ResponseEntity<UserDTOView> doRegister(@RequestBody UserDTOForm form){
+    public ResponseEntity<UserDTOView> doRegister(@RequestBody @Valid UserDTOForm form) {
         UserDTOView dtoView = userService.register(form);
         return ResponseEntity.status(HttpStatus.CREATED).body(dtoView);
     }
@@ -56,8 +66,6 @@ public class UserController {
         userService.enableByEmail(email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
 
 
 }

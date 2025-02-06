@@ -4,10 +4,10 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import se.lexicon.g52todoapi.domain.dto.UserDTOForm;
 import se.lexicon.g52todoapi.domain.dto.UserDTOView;
@@ -15,6 +15,7 @@ import se.lexicon.g52todoapi.service.UserService;
 
 @RequestMapping("api/v1/users")
 @RestController
+@Validated // Useful for method parameter validation
 public class UserController {
 
     private final UserService userService;
@@ -33,8 +34,7 @@ public class UserController {
             @RequestParam
             @NotEmpty
             @NotNull
-//            @Email
-            @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "Invalid Email format")
+            @Email(message = "Invalid Email format")
             String email) {
         UserDTOView responseBody = userService.getByEmail(email);
         return ResponseEntity.ok(responseBody);

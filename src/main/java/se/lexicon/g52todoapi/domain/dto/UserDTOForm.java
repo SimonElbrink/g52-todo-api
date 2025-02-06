@@ -1,9 +1,7 @@
 package se.lexicon.g52todoapi.domain.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 
 import java.util.Set;
 
@@ -18,7 +16,9 @@ public record UserDTOForm(
             message = "Password must contain at least one uppercase letter, one lower case letter, one number and one special character")
         String password,
 
-
+        @NotNull(message = "Roles cannot be null")
+        @Size(min = 1, message = "User must have at least one role")
+        @Valid
         Set<RoleDTOForm> roles
 ) {
 }
